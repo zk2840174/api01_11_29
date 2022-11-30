@@ -37,11 +37,11 @@ public class SampleTodoController {
 
         log.info("getList..............." + pageRequestDTO);
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
         return sampleTodoService.getList(pageRequestDTO);
 
@@ -51,11 +51,11 @@ public class SampleTodoController {
     @GetMapping("/{id}")
     public SampleTodoDTO get(@PathVariable("id") Long id){
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
         return sampleTodoService.get(id);
     }

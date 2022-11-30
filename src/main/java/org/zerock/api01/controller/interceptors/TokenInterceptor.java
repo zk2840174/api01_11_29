@@ -23,16 +23,22 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        log.info("TokenInterceptor preHandle...............");
+        String path = request.getServletPath();
+
+        log.info("TokenInterceptor preHandle..............." + path);
 
         String authHeader = request.getHeader("Authorization");
 
         //나중에 false로 변경필요
         if(authHeader == null ){
             log.info("auth header is null");
+            //return true;
             makeErrorResponse(response, "AccessTokenNull", 401);
             return false;
+
         }
+
+
 
         //Bearer 7
         String accessToken = authHeader.substring(7);
@@ -40,8 +46,17 @@ public class TokenInterceptor implements HandlerInterceptor {
         log.info(jwtUtil);
         log.info(accessToken);
 
+        if(path.equals("/api/sample/member/refresh")) {
+
+            log.info("try refresh.............");
+            return true;
+        }
+
         try {
+
             jwtUtil.validateToken(accessToken);
+
+
         }catch(ExpiredJwtException e){
 
             log.info("Expired Token");

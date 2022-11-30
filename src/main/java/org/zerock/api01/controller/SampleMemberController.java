@@ -1,8 +1,11 @@
 package org.zerock.api01.controller;
 
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +45,7 @@ public class SampleMemberController {
     }
 
     @PostMapping("/refresh")
-    public Map<String, String> refresh(@RequestBody Map<String, String> tokenMap){
+    public ResponseEntity<Map<String, String>> refresh(@RequestBody Map<String, String> tokenMap){
 
         String refreshToken = tokenMap.get("refreshToken");
 
@@ -54,10 +57,17 @@ public class SampleMemberController {
 
         log.info("MID " + mid);
 
-        String accessToken = jwtUtil.generateToken(Map.of("mid", mid), 1);
+        String accessToken = null;
+        try {
+            accessToken = jwtUtil.generateToken(Map.of("mid", mid), 1);
+        }catch(ExpiredJwtException e){
+
+            return new ResponseEntity<>(Map.of("msg","ExpiredRefreshToken"), HttpStatus.UNAUTHORIZED);
+        }
+
         //String newRefreshToken = jwtUtil.generateToken(Map.of("mid", mid), 30);
 
-        return Map.of("accessToken", accessToken, "refreshToken", refreshToken);
+        return ResponseEntity.ok(Map.of("accessToken", accessToken, "refreshToken", refreshToken));
 
     }
 

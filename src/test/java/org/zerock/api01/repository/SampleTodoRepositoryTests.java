@@ -32,6 +32,7 @@ public class SampleTodoRepositoryTests {
             SampleTodo sampleTodo = SampleTodo.builder()
                     .title("Title.."+i)
                     .writer("user"+ (i%10))
+                    .dueDate(LocalDate.of(2022,12,25))
                     .complete(false)
                     .build();
 
