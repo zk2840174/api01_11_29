@@ -20,6 +20,10 @@ public class PageResponseDTO<E> {
     //끝 페이지 번호
     private int end;
 
+    //마지막 페이지 번호
+    private int totalPageNum;
+
+
     //이전 페이지의 존재 여부
     private boolean prev;
     //다음 페이지의 존재 여부
@@ -44,13 +48,15 @@ public class PageResponseDTO<E> {
 
         this.start = this.end - 9;
 
-        int last =  (int)(Math.ceil((total/(double)size)));
+        totalPageNum  =  (int)(Math.ceil((total/(double)size)));
 
-        this.end =  end > last ? last: end;
+        this.end =  end > totalPageNum ? totalPageNum: end;
 
         this.prev = this.start > 1;
 
         this.next =  total > this.end * this.size;
+
+
 
     }
 }
