@@ -1,7 +1,6 @@
 package org.zerock.api01.repository;
 
 
-import antlr.collections.impl.IntRange;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,8 @@ public class SampleTodoRepositoryTests {
 
     @Autowired
     private SampleTodoRepository repository;
+
+
 
     @Test
     public void testInserts() {
